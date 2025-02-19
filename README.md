@@ -9,7 +9,7 @@ Fabfiles and module definitions
 
 `fab` is structured as a main descriptive file for the final image, currently called "Fabfile". A Fabfile example looks like this:
 
-```
+```yaml
 ---
 metadata:
   name: fabrules
@@ -32,7 +32,7 @@ The fields are somewhat self-explanatory:
 
 For each module, there is a short descriptive file with the module definition (see `modules/` directory for examples):
 
-```
+```yaml
 ---
 metadata:
   name: dnf-install
@@ -52,21 +52,22 @@ Like with the top level definition, the fields should be easy to understand:
 Installation
 ---
 
-```
-$ git clone git@github.com:kwozyman/fab.git
-$ cd fab
-$ python3 -m pip install --requirement requirements.txt
+```sh
+git clone git@github.com:kwozyman/fab.git
+cd fab
+python3 -m venv venv && source ./venv/bin/activate
+pip install -e .
 ```
 
 Usage
 ---
 
-A simple `python3 -m fab --help` will show the full command line arguments.
+A simple `fab --help` will show the full command line arguments.
 
 In order to build the container from `Fabfile.example`:
 
-```
-$ python3 -m fab build --fabfile Fabfile.example
+```sh
+fab build --fabfile Fabfile.example
 ```
 
 The above will trigger container image builds in sequence for each of the modules and the final one at the end.
@@ -74,6 +75,6 @@ The above will trigger container image builds in sequence for each of the module
 
 Debugging messages can be enabled in fab with the `--log-level debug` switch, and in the underlying podman call with the `--container-tool-extra-args` switch:
 
-```
-$ python3 -m fab --container-tool-extra-args="--log-level debug" --log-level debug  build --fabfile Fabfile.example
+```sh
+fab --container-tool-extra-args="--log-level debug" --log-level debug  build --fabfile Fabfile.example
 ```
